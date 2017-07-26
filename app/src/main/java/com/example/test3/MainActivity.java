@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     private CustomAdapter adapter;
     private List<MyData> dataList;
-    private List<MyData1> dataList1;
+    //private List<MyData1> dataList1;
     private CustomAdapter1 adapter1;
 
     @Override
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         }
         recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
         dataList = new ArrayList<>();
-        dataList1 = new ArrayList<>();
+
 
             //recyclerView.setVisibility(View.INVISIBLE);
     }
@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             System.out.println(e);
         }
+        System.out.println("onclick");
         recyclerView.setVisibility(View.VISIBLE);
     }
 
@@ -150,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
+                        List<MyData1> dataList1 = new ArrayList<>();
                         Gson gson = new Gson();
                         JsonParser parser = new JsonParser();
                         String result = response.toString();
@@ -162,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
                         //gridLayoutManager = new GridLayoutManager(MainActivity.this,2);
                         recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
 
-                        adapter1 = new CustomAdapter1(MainActivity.this,dataList1);
+                        adapter1 = new CustomAdapter1(MainActivity.this,dataList1,ProductRequest.this);
                         recyclerView.setAdapter(adapter1);
                         setTitle(dataList.get(0).getTitle());
                     } catch (Exception e) {

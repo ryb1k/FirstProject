@@ -21,12 +21,12 @@ public class CustomAdapter1 extends RecyclerView.Adapter<CustomAdapter1.ViewHold
 
     private Context context;
     private List<MyData1> myData;
-    //private MainActivity.ProductRequest request;
+    private MainActivity.ProductRequest request;
 
-    public CustomAdapter1(Context context, List<MyData1> myData) {
+    public CustomAdapter1(Context context, List<MyData1> myData, MainActivity.ProductRequest request) {
         this.context = context;
         this.myData = myData;
-        //this.request = request;
+        this.request = request;
     }
 
 
