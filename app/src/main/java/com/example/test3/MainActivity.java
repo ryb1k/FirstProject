@@ -30,15 +30,16 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     private CustomAdapter adapter;
     private List<MyData> dataList;
-    //private List<MyData1> dataList1;
+    private List<MyData1> dataList1;
     private CustomAdapter1 adapter1;
+    CategoryRequest categoryRequest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         try {
-            CategoryRequest categoryRequest = new CategoryRequest();
+            categoryRequest = new CategoryRequest(MainActivity.this);
             categoryRequest.userLogin();
         } catch (Exception e) {
             System.out.println(e);
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             //recyclerView.setVisibility(View.INVISIBLE);
     }
 
-    public void onClick(View view) {
+    /*public void onClick(View view) {
         recyclerView.setVisibility(View.INVISIBLE);
         try {
             ProductRequest productRequest = new ProductRequest();
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("onclick");
         recyclerView.setVisibility(View.VISIBLE);
-    }
+    }*/
 
 
 
@@ -83,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public class CategoryRequest
+    /*public class CategoryRequest
     {
         public void userLogin() throws JSONException {
 
@@ -138,9 +139,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 
-    public class ProductRequest
+    /*public  class ProductRequest
     {
         public void userLogin() throws JSONException {
 
@@ -200,5 +201,20 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+    }*/
+
+    public void onDownloadSuccessCategory(List<MyData> dataList) {
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
+        //CategoryRequest categoryRequest = new CategoryRequest(MainActivity.this);
+        adapter = new CustomAdapter(MainActivity.this,dataList,categoryRequest);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void onDownloadSuccessProduct(List<MyData1>dataList1) {
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this,1));
+        ProductRequest productRequest = new ProductRequest(MainActivity.this);
+        adapter1 = new CustomAdapter1(MainActivity.this,dataList1,productRequest);
+        recyclerView.setAdapter(adapter1);
+        setTitle(dataList.get(0).getTitle());
     }
 }
