@@ -24,7 +24,7 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity { // TODO: 02.08.2017 make 2 activities or 2 fragments
 
     private RecyclerView recyclerView;
     private GridLayoutManager gridLayoutManager;
@@ -65,9 +65,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public static class BaseRestClient
-    {
-        private static final String BASE_URL = "http://82.146.53.185:8101/";
+    public static class BaseRestClient { // TODO: 02.08.2017 extract to single file,rename BaseApi
+
+        private static final String BASE_URL = "http://82.146.53.185:8101/"; // TODO: 02.08.2017 extract to gradle, use buildConfigField
 
         private static AsyncHttpClient client = new AsyncHttpClient();
 
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             return BASE_URL + relativeUrl;
         }
     }
-
+    // TODO: 02.08.2017 remove, if not used
     /*public class CategoryRequest
     {
         public void userLogin() throws JSONException {

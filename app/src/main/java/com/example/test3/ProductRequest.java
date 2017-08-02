@@ -20,35 +20,36 @@ import cz.msebera.android.httpclient.Header;
  * Created by Денис on 26.07.2017.
  */
 
-public class ProductRequest
-{
-    private MainActivity mainActivity;
+public class ProductRequest { // TODO: 02.08.2017 rename to ProductApi, extend from BaseApi
+
+    private MainActivity mainActivity; // TODO: 02.08.2017 remove
 
     public ProductRequest(MainActivity mainActivity) {
         this.mainActivity=mainActivity;
     }
 
-    public void userLogin() throws JSONException {
+    public void userLogin() throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
 
         RequestParams params = new RequestParams();
-        params.put("appKey", "yx-1PU73oUj6gfk0hNyrNUwhWnmBRld7-SfKAU7Kg6Fpp43anR261KDiQ-MY4P2SRwH_cd4Py1OCY5jpPnY_Viyzja-s18njTLc0E7XcZFwwvi32zX-B91Sdwq1KeZ7m");
+        params.put("appKey", "yx-1PU73oUj6gfk0hNyrNUwhWnmBRld7-SfKAU7Kg6Fpp43anR261KDiQ-MY4P2SRwH_cd4Py1OCY5jpPnY_Viyzja-s18njTLc0E7XcZFwwvi32zX-B91Sdwq1KeZ7m"); // TODO: 02.08.2017 extract to gradle
 
         MainActivity.BaseRestClient.get("api/common/product/list", params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    List<MyData1> dataList1 = new ArrayList<>();
+                    List<MyData1> dataList1 = new ArrayList<>(); // TODO: 02.08.2017 products
                     Gson gson = new Gson();
                     JsonParser parser = new JsonParser();
                     String result = response.toString();
-                    JsonArray root = parser.parse(result).getAsJsonObject().getAsJsonArray("data");
-                    for (int i=0;i<root.size();i++) {
+                    JsonArray root = parser.parse(result).getAsJsonObject().getAsJsonArray("data"); // TODO: 02.08.2017 shorten this
+                    for (int i=0;i<root.size();i++) {// TODO: 02.08.2017 update formatting
+                        // TODO: 02.08.2017 rename i to index or productIndex
                         JsonObject tile = root.get(i).getAsJsonObject();
                         MyData1 product = gson.fromJson(tile, MyData1.class);
                         dataList1.add(product);
-                    }
-                    //gridLayoutManager = new GridLayoutManager(MainActivity.this,2);
+                    }// TODO: 02.08.2017 extract to template method JsonHelper.parseItemList
                     mainActivity.onDownloadSuccessProduct(dataList1);
+                    // TODO: 02.08.2017 call listener.onProductsLoaded(products)
                 } catch (Exception e) {
                     int abc=123;
                 }

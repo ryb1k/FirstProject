@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Денис on 25.07.2017.
  */
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{
+public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{ // TODO: 02.08.2017 update formatting and rename to CategoryAdapter
 
     private MainActivity context;
     private List<MyData> myData;
@@ -66,7 +66,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
             image.setOnClickListener(new View.OnClickListener(){
 
                 @Override
-                public void onClick(View view){
+                public void onClick(View view){ // TODO: 02.08.2017 send category touch to activity via listener
                     recyclerView = (RecyclerView) adapter.context.findViewById(R.id.recyclerView);
                     recyclerView.setVisibility(View.INVISIBLE);
                     try {

@@ -18,7 +18,7 @@ import java.util.List;
  * Created by Денис on 26.07.2017.
  */
 
-public class CustomAdapter1 extends RecyclerView.Adapter<CustomAdapter1.ViewHolder> {
+public class CustomAdapter1 extends RecyclerView.Adapter<CustomAdapter1.ViewHolder> { // TODO: 02.08.2017 ProductListAdapter
 
     private MainActivity context;
     private List<MyData1> myData;
@@ -40,9 +40,9 @@ public class CustomAdapter1 extends RecyclerView.Adapter<CustomAdapter1.ViewHold
     }
 
     @Override
-    public void onBindViewHolder(final CustomAdapter1.ViewHolder holder, int position) {
+    public void onBindViewHolder(final CustomAdapter1.ViewHolder holder, int position) { // TODO: 02.08.2017 every single parse in one varibale
 
-        holder.title.setText(myData.get(position).getTitle()+" Цена: "+myData.get(position).getPrice()+" руб.");
+        holder.title.setText(myData.get(position).getTitle()+" Цена: "+myData.get(position).getPrice()+" руб."); // TODO: 02.08.2017 update formatting
         Glide.with(context).load(myData.get(position).getImageUrl()).into(holder.image);
     }
 

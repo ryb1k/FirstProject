@@ -19,8 +19,8 @@ import cz.msebera.android.httpclient.Header;
  * Created by Денис on 26.07.2017.
  */
 
-public class CategoryRequest
-{
+public class CategoryRequest { // TODO: 02.08.2017 update like ProductRequest
+
     public MainActivity mainActivity;
 
     public CategoryRequest(MainActivity mainActivity) {
