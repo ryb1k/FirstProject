@@ -1,12 +1,10 @@
 package com.example.test3;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,19 +15,19 @@ import java.util.List;
  * Created by Денис on 25.07.2017.
  */
 
-public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder>{ // TODO: 02.08.2017 update formatting and rename to CategoryAdapter
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> { // TODO: 02.08.2017 update formatting and rename to CategoryListAdapter
 
     private MainActivity context;
-    private List<MyData> myData;
-    private CategoryRequest request;
+    private List<Category> category;
+    private CategoryApi request;
 
-    public CustomAdapter(MainActivity context, List<MyData> myData, CategoryRequest request) {
+    public CategoryListAdapter(MainActivity context, List<Category> category, CategoryApi request) {
         this.context = context;
-        this.myData = myData;
+        this.category = category;
         this.request = request;
     }
 
-    /*public CustomAdapter(MainActivity mainActivity, List<MyData> dataList) {
+    /*public CategoryListAdapter(MainActivity mainActivity, List<Category> dataList) {
     }*/
 
     @Override
@@ -40,13 +38,13 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.title.setText(myData.get(position).getTitle());
-        Glide.with(context).load(myData.get(position).getImageUrl()).into(holder.image);
+        holder.title.setText(category.get(position).getTitle());
+        Glide.with(context).load(category.get(position).getImageUrl()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return myData.size();
+        return category.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,11 +52,9 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
         public TextView title;
         public ImageButton image;
         public RecyclerView recyclerView;
-        public CustomAdapter adapter;
+        public CategoryListAdapter adapter;
 
-
-
-        public ViewHolder(final View itemView, final CustomAdapter adapter) {
+        public ViewHolder(final View itemView, final CategoryListAdapter adapter) {
             super(itemView);
             this.adapter=adapter;
             title = (TextView)itemView.findViewById(R.id.title);
@@ -70,12 +66,11 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.ViewHolder
                     recyclerView = (RecyclerView) adapter.context.findViewById(R.id.recyclerView);
                     recyclerView.setVisibility(View.INVISIBLE);
                     try {
-                        ProductRequest productRequest = new ProductRequest(context);
-                        productRequest.userLogin();
+                        ProductApi productApi = new ProductApi(context);
+                        productApi.userLogin();
                     } catch (Exception e) {
                         System.out.println(e);
                     }
-                    System.out.println("onclick");
                     recyclerView.setVisibility(View.VISIBLE);
                 }
             });

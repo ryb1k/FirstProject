@@ -4,7 +4,7 @@ package com.example.test3;
  * Created by Денис on 26.07.2017.
  */
 
-public class MyData1 { // TODO: 02.08.2017 rename to product
+public class Product { // TODO: 02.08.2017 rename to product
 
     private int productId;
     private String title;
@@ -14,7 +14,7 @@ public class MyData1 { // TODO: 02.08.2017 rename to product
     private String imageUrl;
     private String[] images;
 
-    public MyData1(int productId, String title, String productDescription, Number price, Number rating, String imageUrl, String[] images) {
+    public Product(int productId, String title, String productDescription, Number price, Number rating, String imageUrl, String[] images) {
         this.productId = productId;
         this.title = title;
         this.productDescription = productDescription;

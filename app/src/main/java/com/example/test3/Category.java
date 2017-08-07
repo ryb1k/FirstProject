@@ -4,7 +4,7 @@ package com.example.test3;
  * Created by Денис on 25.07.2017.
  */
 
-public class MyData { // TODO: 02.08.2017 rename to Category
+public class Category { // TODO: 02.08.2017 rename to Category
 
     private int  categoryId;
     private String title;
@@ -13,7 +13,7 @@ public class MyData { // TODO: 02.08.2017 rename to Category
     private String fullName;
     private String categoryDescription;
 
-    public MyData(int categoryId, String title, String imageUrl, int hasSubcategories, String fullName, String categoryDescription) {
+    public Category(int categoryId, String title, String imageUrl, int hasSubcategories, String fullName, String categoryDescription) {
         this.categoryId = categoryId;
         this.title = title;
         this.imageUrl = imageUrl;

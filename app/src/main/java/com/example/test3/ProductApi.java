@@ -2,6 +2,7 @@ package com.example.test3;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -16,39 +17,45 @@ import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
+import static com.example.test3.BuildConfig.RELATIVE_PRODUCT_URL;
+import static com.example.test3.BuildConfig.apiVariable;
+import static com.example.test3.BuildConfig.key;
+
 /**
  * Created by Денис on 26.07.2017.
  */
 
-public class ProductRequest { // TODO: 02.08.2017 rename to ProductApi, extend from BaseApi
+public class ProductApi extends BaseApi {
 
     private MainActivity mainActivity; // TODO: 02.08.2017 remove
 
-    public ProductRequest(MainActivity mainActivity) {
+    public ProductApi(MainActivity mainActivity) {
         this.mainActivity=mainActivity;
     }
 
     public void userLogin() throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
 
         RequestParams params = new RequestParams();
-        params.put("appKey", "yx-1PU73oUj6gfk0hNyrNUwhWnmBRld7-SfKAU7Kg6Fpp43anR261KDiQ-MY4P2SRwH_cd4Py1OCY5jpPnY_Viyzja-s18njTLc0E7XcZFwwvi32zX-B91Sdwq1KeZ7m"); // TODO: 02.08.2017 extract to gradle
+        params.put(apiVariable, key);
 
-        MainActivity.BaseRestClient.get("api/common/product/list", params, new JsonHttpResponseHandler() {
+        BaseApi.get(RELATIVE_PRODUCT_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    List<MyData1> dataList1 = new ArrayList<>(); // TODO: 02.08.2017 products
+                    List<Product> products = new ArrayList<>();
                     Gson gson = new Gson();
                     JsonParser parser = new JsonParser();
                     String result = response.toString();
-                    JsonArray root = parser.parse(result).getAsJsonObject().getAsJsonArray("data"); // TODO: 02.08.2017 shorten this
-                    for (int i=0;i<root.size();i++) {// TODO: 02.08.2017 update formatting
-                        // TODO: 02.08.2017 rename i to index or productIndex
-                        JsonObject tile = root.get(i).getAsJsonObject();
-                        MyData1 product = gson.fromJson(tile, MyData1.class);
-                        dataList1.add(product);
+                    JsonElement element = parser.parse(result);
+                    JsonObject object = element.getAsJsonObject();
+                    JsonArray productsArray = object.getAsJsonArray("data");
+                    for (int productIndex = 0; productIndex < productsArray.size(); productIndex++) {
+                        JsonElement productIndexElement = productsArray.get(productIndex);
+                        JsonObject productObject = productIndexElement.getAsJsonObject();
+                        Product product = gson.fromJson(productObject, Product.class);
+                        products.add(product);
                     }// TODO: 02.08.2017 extract to template method JsonHelper.parseItemList
-                    mainActivity.onDownloadSuccessProduct(dataList1);
+                    mainActivity.onDownloadSuccessProduct(products);
                     // TODO: 02.08.2017 call listener.onProductsLoaded(products)
                 } catch (Exception e) {
                     int abc=123;
@@ -83,4 +90,5 @@ public class ProductRequest { // TODO: 02.08.2017 rename to ProductApi, extend f
             }
         });
     }
+
 }
