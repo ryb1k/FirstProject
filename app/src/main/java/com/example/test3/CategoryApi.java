@@ -1,5 +1,8 @@
 package com.example.test3;
 
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -18,7 +21,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 import static com.example.test3.BuildConfig.RELATIVE_CATEGORY_URL;
-import static com.example.test3.BuildConfig.apiVariable;
+import static com.example.test3.BuildConfig.apiKeyVariable;
 import static com.example.test3.BuildConfig.key;
 
 /**
@@ -33,32 +36,21 @@ public class CategoryApi extends BaseApi { // TODO: 02.08.2017 update like Produ
         this.mainActivity=mainActivity;
     }
 
-    public void userLogin() throws JSONException {
+    public void loadCategories() throws JSONException {
 
         RequestParams params = new RequestParams();
-        params.put(apiVariable, key);
+        params.put(apiKeyVariable, key);
 
         BaseApi.get(RELATIVE_CATEGORY_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     List <Category> categories = new ArrayList<>();
-                    Gson gson = new Gson();
-                    JsonParser parser = new JsonParser();
-                    String result = response.toString();
-                    JsonElement element = parser.parse(result);
-                    JsonObject object = element.getAsJsonObject();
-                    JsonObject data = object.getAsJsonObject("data");
-                    JsonArray categoriesArray = data.getAsJsonArray("categories");
-                    for (int categoryIndex = 0; categoryIndex < categoriesArray.size(); categoryIndex++) {
-                        JsonElement categoryIndexElement = categoriesArray.get(categoryIndex);
-                        JsonObject categoryObject = categoryIndexElement.getAsJsonObject();
-                        Category category = gson.fromJson(categoryObject, Category.class);
-                        categories.add(category);
-                    }
-                    mainActivity.onDownloadSuccessCategory(categories);
+                    JsonHelper jsonHelper = new JsonHelper();
+                    jsonHelper.parseCategoryList(categories,response);
+                    //mainActivity.onDownloadSuccessCategory(categories);
                 } catch (Exception e) {
-                    int abc=123;
+                    System.out.println(e);
                 }
             }
 

@@ -18,7 +18,9 @@ import java.util.List;
 import cz.msebera.android.httpclient.Header;
 
 import static com.example.test3.BuildConfig.RELATIVE_PRODUCT_URL;
-import static com.example.test3.BuildConfig.apiVariable;
+
+import static com.example.test3.BuildConfig.apiCategoryIdVariable;
+import static com.example.test3.BuildConfig.apiKeyVariable;
 import static com.example.test3.BuildConfig.key;
 
 /**
@@ -33,32 +35,23 @@ public class ProductApi extends BaseApi {
         this.mainActivity=mainActivity;
     }
 
-    public void userLogin() throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
+    public void loadProducts() throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
 
         RequestParams params = new RequestParams();
-        params.put(apiVariable, key);
+        params.put(apiKeyVariable, key);
+        //params.put(apiCategoryIdVariable,categoryId);
 
         BaseApi.get(RELATIVE_PRODUCT_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     List<Product> products = new ArrayList<>();
-                    Gson gson = new Gson();
-                    JsonParser parser = new JsonParser();
-                    String result = response.toString();
-                    JsonElement element = parser.parse(result);
-                    JsonObject object = element.getAsJsonObject();
-                    JsonArray productsArray = object.getAsJsonArray("data");
-                    for (int productIndex = 0; productIndex < productsArray.size(); productIndex++) {
-                        JsonElement productIndexElement = productsArray.get(productIndex);
-                        JsonObject productObject = productIndexElement.getAsJsonObject();
-                        Product product = gson.fromJson(productObject, Product.class);
-                        products.add(product);
-                    }// TODO: 02.08.2017 extract to template method JsonHelper.parseItemList
+                    JsonHelper jsonHelper = new JsonHelper();
+                    jsonHelper.parseProductList(products, response);
                     mainActivity.onDownloadSuccessProduct(products);
                     // TODO: 02.08.2017 call listener.onProductsLoaded(products)
                 } catch (Exception e) {
-                    int abc=123;
+                    System.out.println(e);
                 }
             }
 

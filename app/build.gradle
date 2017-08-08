@@ -13,8 +13,9 @@ android {
         buildConfigField "String", "SERVER_URL", "\"http://82.146.53.185:8101/\""
         buildConfigField "String", "RELATIVE_PRODUCT_URL", "\"api/common/product/list\""
         buildConfigField "String", "RELATIVE_CATEGORY_URL", "\"api/common/category/list\""
-        buildConfigField "String", "apiVariable", "\"appKey\""
+        buildConfigField "String", "apiKeyVariable", "\"appKey\""
         buildConfigField "String", "key", "\"yx-1PU73oUj6gfk0hNyrNUwhWnmBRld7-SfKAU7Kg6Fpp43anR261KDiQ-MY4P2SRwH_cd4Py1OCY5jpPnY_Viyzja-s18njTLc0E7XcZFwwvi32zX-B91Sdwq1KeZ7m\""
+        buildConfigField "String", "apiCategoryIdVariable", "\"categoryId\""
     }
     buildTypes {
         release {

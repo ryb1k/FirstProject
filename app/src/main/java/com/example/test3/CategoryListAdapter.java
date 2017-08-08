@@ -1,5 +1,6 @@
 package com.example.test3;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,20 +16,18 @@ import java.util.List;
  * Created by Денис on 25.07.2017.
  */
 
-public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> { // TODO: 02.08.2017 update formatting and rename to CategoryListAdapter
+public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
     private MainActivity context;
     private List<Category> category;
     private CategoryApi request;
+    public int position;
 
     public CategoryListAdapter(MainActivity context, List<Category> category, CategoryApi request) {
         this.context = context;
         this.category = category;
         this.request = request;
     }
-
-    /*public CategoryListAdapter(MainActivity mainActivity, List<Category> dataList) {
-    }*/
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,6 +37,7 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        this.position=position;
         holder.title.setText(category.get(position).getTitle());
         Glide.with(context).load(category.get(position).getImageUrl()).into(holder.image);
     }
@@ -66,8 +66,9 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
                     recyclerView = (RecyclerView) adapter.context.findViewById(R.id.recyclerView);
                     recyclerView.setVisibility(View.INVISIBLE);
                     try {
+                        //Intent intent = new Intent(MainActivity.this,ProductActivity.class);
                         ProductApi productApi = new ProductApi(context);
-                        productApi.userLogin();
+                        productApi.loadProducts();
                     } catch (Exception e) {
                         System.out.println(e);
                     }

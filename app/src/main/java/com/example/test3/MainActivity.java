@@ -11,10 +11,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity { // TODO: 02.08.2017 make 2 activities or 2 fragments
 
     private RecyclerView recyclerView;
-    private GridLayoutManager gridLayoutManager;
     private CategoryListAdapter categoryListAdapter;
     private List<Category> dataList;
-    private List<Product> dataList1;
     private ProductListAdapter productListAdapter;
     CategoryApi categoryApi;
 
@@ -24,7 +22,7 @@ public class MainActivity extends AppCompatActivity { // TODO: 02.08.2017 make 2
         setContentView(R.layout.activity_main);
         try {
             categoryApi = new CategoryApi(MainActivity.this);
-            categoryApi.userLogin();
+            categoryApi.loadCategories();
         } catch (Exception e) {
             System.out.println(e);
         }
