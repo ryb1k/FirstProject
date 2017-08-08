@@ -1,13 +1,5 @@
 package com.example.test3;
 
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -24,19 +16,14 @@ import static com.example.test3.BuildConfig.RELATIVE_CATEGORY_URL;
 import static com.example.test3.BuildConfig.apiKeyVariable;
 import static com.example.test3.BuildConfig.key;
 
+
 /**
  * Created by Денис on 26.07.2017.
  */
 
 public class CategoryApi extends BaseApi { // TODO: 02.08.2017 update like ProductApi
 
-    public MainActivity mainActivity;
-
-    public CategoryApi(MainActivity mainActivity) {
-        this.mainActivity=mainActivity;
-    }
-
-    public void loadCategories() throws JSONException {
+   public void loadCategories(final OnCategoriesLoadListener onCategoriesLoadListener) throws JSONException {
 
         RequestParams params = new RequestParams();
         params.put(apiKeyVariable, key);
@@ -48,6 +35,7 @@ public class CategoryApi extends BaseApi { // TODO: 02.08.2017 update like Produ
                     List <Category> categories = new ArrayList<>();
                     JsonHelper jsonHelper = new JsonHelper();
                     jsonHelper.parseCategoryList(categories,response);
+                    onCategoriesLoadListener.onCategoryLoaded(categories);
                     //mainActivity.onDownloadSuccessCategory(categories);
                 } catch (Exception e) {
                     System.out.println(e);

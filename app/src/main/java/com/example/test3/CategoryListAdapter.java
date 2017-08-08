@@ -1,16 +1,15 @@
 package com.example.test3;
 
-import android.content.Intent;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.TextView;
+        import android.support.v7.widget.RecyclerView;
+        import android.view.LayoutInflater;
+        import android.view.View;
+        import android.view.ViewGroup;
+        import android.widget.ImageButton;
+        import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+        import com.bumptech.glide.Glide;
 
-import java.util.List;
+        import java.util.List;
 
 /**
  * Created by Денис on 25.07.2017.
@@ -19,14 +18,11 @@ import java.util.List;
 public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapter.ViewHolder> {
 
     private MainActivity context;
-    private List<Category> category;
-    private CategoryApi request;
-    public int position;
+    private List<Category> categories;
 
-    public CategoryListAdapter(MainActivity context, List<Category> category, CategoryApi request) {
-        this.context = context;
-        this.category = category;
-        this.request = request;
+    public CategoryListAdapter(MainActivity context, List<Category> categories) {
+        this.context=context;
+        this.categories = categories;
     }
 
     @Override
@@ -37,21 +33,23 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        this.position=position;
-        holder.title.setText(category.get(position).getTitle());
-        Glide.with(context).load(category.get(position).getImageUrl()).into(holder.image);
+        holder.title.setText(categories.get(position).getTitle());
+        Glide.with(context).load(categories.get(position).getImageUrl()).into(holder.image);
     }
 
     @Override
     public int getItemCount() {
-        return category.size();
+        return categories.size();
+    }
+
+    public List<Category> getCategories() {
+        return categories;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title;
         public ImageButton image;
-        public RecyclerView recyclerView;
         public CategoryListAdapter adapter;
 
         public ViewHolder(final View itemView, final CategoryListAdapter adapter) {
@@ -62,17 +60,10 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
             image.setOnClickListener(new View.OnClickListener(){
 
                 @Override
-                public void onClick(View view){ // TODO: 02.08.2017 send category touch to activity via listener
-                    recyclerView = (RecyclerView) adapter.context.findViewById(R.id.recyclerView);
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    try {
-                        //Intent intent = new Intent(MainActivity.this,ProductActivity.class);
-                        ProductApi productApi = new ProductApi(context);
-                        productApi.loadProducts();
-                    } catch (Exception e) {
-                        System.out.println(e);
-                    }
-                    recyclerView.setVisibility(View.VISIBLE);
+                public void onClick(View view){ // TODO: 02.08.2017 send categories touch to activity via listener
+
+                    int k = getAdapterPosition();
+                    context.onCategorySelected(k);
                 }
             });
         }

@@ -29,26 +29,21 @@ import static com.example.test3.BuildConfig.key;
 
 public class ProductApi extends BaseApi {
 
-    private MainActivity mainActivity; // TODO: 02.08.2017 remove
-
-    public ProductApi(MainActivity mainActivity) {
-        this.mainActivity=mainActivity;
-    }
-
-    public void loadProducts() throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
+    public void loadProducts(int categoryId, final OnProductsLoadedListener onProductsLoadedListener) throws JSONException { // TODO: 02.08.2017 LoadProducts(int categoryId, ProductListener listener)
 
         RequestParams params = new RequestParams();
         params.put(apiKeyVariable, key);
-        //params.put(apiCategoryIdVariable,categoryId);
+        params.put(apiCategoryIdVariable,categoryId);
 
         BaseApi.get(RELATIVE_PRODUCT_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
+
                     List<Product> products = new ArrayList<>();
                     JsonHelper jsonHelper = new JsonHelper();
                     jsonHelper.parseProductList(products, response);
-                    mainActivity.onDownloadSuccessProduct(products);
+                    onProductsLoadedListener.onProductsLoaded(products);
                     // TODO: 02.08.2017 call listener.onProductsLoaded(products)
                 } catch (Exception e) {
                     System.out.println(e);

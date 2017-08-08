@@ -17,14 +17,12 @@ import java.util.List;
 
 public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ViewHolder> {
 
-    private MainActivity context;
+    private ProductActivity context;
     private List<Product> products;
-    private ProductApi request;
 
-    public ProductListAdapter(MainActivity context, List<Product> products, ProductApi request) {
+    public ProductListAdapter(ProductActivity context, List<Product> products) {
         this.context = context;
         this.products = products;
-        this.request = request;
     }
 
 
@@ -54,7 +52,6 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         public TextView title;
         public ImageButton image;
-        public RecyclerView recyclerView;
 
         public ViewHolder(final View itemView) {
             super(itemView);
