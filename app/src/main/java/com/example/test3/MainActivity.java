@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements CategoryApiListen
     private CategoryListAdapter categoryListAdapter;
     private List<Category> categories;
     CategoryApi categoryApi;
+    ProductApi productApi;
 
     @Override
     public void onCategoryLoaded(List<Category> categoryList) {
@@ -33,16 +36,28 @@ public class MainActivity extends AppCompatActivity implements CategoryApiListen
             System.out.println(e);
         }
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-    }
+        Button button = (Button) findViewById(R.id.button);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onCategorySelected(new Category());
+            }
+        });
 
+    }
 
     @Override
     public void onCategorySelected(Category category) {
         Intent intent = new Intent(MainActivity.this, ProductActivity.class);
         int categoryId = category.getCategoryId();
         String title = category.getTitle();
+        if (title==null) {
+            title = "Продукты";
+        }
         intent.putExtra("categoryId", categoryId);
         intent.putExtra("categoryTitle", title);
         startActivity(intent);
     }
+
+
 }

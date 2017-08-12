@@ -22,6 +22,8 @@ public class Category {
         this.categoryDescription = categoryDescription;
     }
 
+    public Category(){}
+
     public int getCategoryId() {
         return categoryId;
     }
