@@ -4,7 +4,7 @@ package com.example.test3;
  * Created by Денис on 25.07.2017.
  */
 
-public class Category { // TODO: 02.08.2017 rename to Category
+public class Category {
 
     private int  categoryId;
     private String title;

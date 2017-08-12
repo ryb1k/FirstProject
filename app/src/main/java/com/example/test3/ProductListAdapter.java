@@ -38,7 +38,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
         String title = products.get(position).getTitle();
         Number price = products.get(position).getPrice();
-        holder.title.setText(title + " Цена: " + price + " руб.");
+        CurrencyHelper currencyHelper = new CurrencyHelper();
+        holder.title.setText(currencyHelper.formatPrice(title, price));
         Glide.with(context).load(products.get(position).getImageUrl()).into(holder.image);
     }
 

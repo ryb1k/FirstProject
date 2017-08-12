@@ -5,5 +5,5 @@ package com.example.test3;
  */
 
 interface OnCategorySelectedListener {
-    void onCategorySelected(int k);
+    void onCategorySelected(Category category);
 }

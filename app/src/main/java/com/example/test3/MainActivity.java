@@ -8,7 +8,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements OnCategoriesLoadListener, OnCategorySelectedListener {
+public class MainActivity extends AppCompatActivity implements CategoryApiListener, OnCategorySelectedListener {
 
     private RecyclerView recyclerView;
     private CategoryListAdapter categoryListAdapter;
@@ -37,12 +37,12 @@ public class MainActivity extends AppCompatActivity implements OnCategoriesLoadL
 
 
     @Override
-    public void onCategorySelected(int k) {
+    public void onCategorySelected(Category category) {
         Intent intent = new Intent(MainActivity.this, ProductActivity.class);
-        int categoryId = categoryListAdapter.getCategories().get(k).getCategoryId();
-        String title = categoryListAdapter.getCategories().get(k).getTitle();
+        int categoryId = category.getCategoryId();
+        String title = category.getTitle();
         intent.putExtra("categoryId", categoryId);
-        intent.putExtra("title", title);
+        intent.putExtra("categoryTitle", title);
         startActivity(intent);
     }
 }

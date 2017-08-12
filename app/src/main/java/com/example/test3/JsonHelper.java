@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
 
@@ -17,34 +18,16 @@ import java.util.List;
 
 public class JsonHelper {
 
-    public void parseCategoryList(List<Category> categories, JSONObject response) {
-        Gson gson = new Gson();
-        JsonParser parser = new JsonParser();
-        String result = response.toString();
-        JsonElement element = parser.parse(result);
-        JsonObject object = element.getAsJsonObject();
-        JsonObject data = object.getAsJsonObject("data");
-        JsonArray categoriesArray = data.getAsJsonArray("categories");
-        for (int categoryIndex = 0; categoryIndex < categoriesArray.size(); categoryIndex++) {
-            JsonElement categoryIndexElement = categoriesArray.get(categoryIndex);
-            JsonObject categoryObject = categoryIndexElement.getAsJsonObject();
-            Category category = gson.fromJson(categoryObject, Category.class);
-            categories.add(category);
-        }
-    }
+    public <T> List<T> parseArrayFromJson(Class<T> classOfT, JsonArray jsonArray) throws JsonSyntaxException {
 
-    public void parseProductList(List<Product> products, JSONObject response) {
         Gson gson = new Gson();
-        JsonParser parser = new JsonParser();
-        String result = response.toString();
-        JsonElement element = parser.parse(result);
-        JsonObject object = element.getAsJsonObject();
-        JsonArray productsArray = object.getAsJsonArray("data");
-        for (int productIndex = 0; productIndex < productsArray.size(); productIndex++) {
-            JsonElement productIndexElement = productsArray.get(productIndex);
-            JsonObject productObject = productIndexElement.getAsJsonObject();
-            Product product = gson.fromJson(productObject, Product.class);
-            products.add(product);
+        List<T> list = new ArrayList<>();
+        for (int index = 0; index < jsonArray.size(); index++) {
+            JsonElement jsonElement = jsonArray.get(index);
+            JsonObject jsonObject = jsonElement.getAsJsonObject();
+            T category = gson.fromJson(jsonObject, classOfT);
+            list.add(category);
         }
+        return list;
     }
 }

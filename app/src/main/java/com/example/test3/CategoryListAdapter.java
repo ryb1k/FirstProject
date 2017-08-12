@@ -21,14 +21,14 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
     private List<Category> categories;
 
     public CategoryListAdapter(MainActivity context, List<Category> categories) {
-        this.context=context;
+        this.context = context;
         this.categories = categories;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card,parent,false);
-        return new ViewHolder(itemView,this);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.card, parent, false);
+        return new ViewHolder(itemView, this);
     }
 
     @Override
@@ -54,16 +54,16 @@ public class CategoryListAdapter extends RecyclerView.Adapter<CategoryListAdapte
 
         public ViewHolder(final View itemView, final CategoryListAdapter adapter) {
             super(itemView);
-            this.adapter=adapter;
-            title = (TextView)itemView.findViewById(R.id.title);
+            this.adapter = adapter;
+            title = (TextView) itemView.findViewById(R.id.title);
             image = (ImageButton) itemView.findViewById(R.id.image);
-            image.setOnClickListener(new View.OnClickListener(){
+            image.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onClick(View view){ // TODO: 02.08.2017 send categories touch to activity via listener
+                public void onClick(View view) {
 
-                    int k = getAdapterPosition();
-                    context.onCategorySelected(k);
+                    int categoryIndex = getAdapterPosition();
+                    context.onCategorySelected(categories.get(categoryIndex));
                 }
             });
         }

@@ -1,5 +1,6 @@
 package com.example.test3;
 
+import com.google.gson.JsonArray;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -7,13 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
 import static com.example.test3.BuildConfig.RELATIVE_CATEGORY_URL;
-import static com.example.test3.BuildConfig.apiKeyVariable;
 import static com.example.test3.BuildConfig.key;
 
 
@@ -21,22 +20,22 @@ import static com.example.test3.BuildConfig.key;
  * Created by Денис on 26.07.2017.
  */
 
-public class CategoryApi extends BaseApi { // TODO: 02.08.2017 update like ProductApi
+public class CategoryApi extends BaseApi {
 
-   public void loadCategories(final OnCategoriesLoadListener onCategoriesLoadListener) throws JSONException {
+    public void loadCategories(final CategoryApiListener categoryApiListener) throws JSONException {
 
+        final BaseApiListener baseApiListener = this;
         RequestParams params = new RequestParams();
-        params.put(apiKeyVariable, key);
+        params.put("appKey", key);
 
-        BaseApi.get(RELATIVE_CATEGORY_URL, params, new JsonHttpResponseHandler() {
+        get(RELATIVE_CATEGORY_URL, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    List <Category> categories = new ArrayList<>();
                     JsonHelper jsonHelper = new JsonHelper();
-                    jsonHelper.parseCategoryList(categories,response);
-                    onCategoriesLoadListener.onCategoryLoaded(categories);
-                    //mainActivity.onDownloadSuccessCategory(categories);
+                    JsonArray array = baseApiListener.onParseCategoryResponse(response);
+                    List<Category> categories = jsonHelper.parseArrayFromJson(Category.class,array);
+                    categoryApiListener.onCategoryLoaded(categories);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
