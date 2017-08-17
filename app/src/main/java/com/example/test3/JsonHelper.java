@@ -7,6 +7,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -18,16 +20,18 @@ import java.util.List;
 
 public class JsonHelper {
 
-    public <T> List<T> parseArrayFromJson(Class<T> classOfT, JsonArray jsonArray) throws JsonSyntaxException {
+    public static <T> List<T> parseArrayFromJson(Class<T> classOfT, JSONArray jsonArray) throws JsonSyntaxException {
 
         Gson gson = new Gson();
         List<T> list = new ArrayList<>();
-        for (int index = 0; index < jsonArray.size(); index++) {
-            JsonElement jsonElement = jsonArray.get(index);
-            JsonObject jsonObject = jsonElement.getAsJsonObject();
-            T category = gson.fromJson(jsonObject, classOfT);
-            list.add(category);
-        }
+        for (int index = 0; index < jsonArray.length(); index++) {
+            try {
+                JSONObject jsonObject = (JSONObject) jsonArray.get(index);
+                T category = gson.fromJson(String.valueOf(jsonObject), classOfT);
+                list.add(category);
+            } catch (JSONException e) {
+            }
+          }
         return list;
     }
 }

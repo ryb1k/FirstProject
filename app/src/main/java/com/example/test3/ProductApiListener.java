@@ -8,4 +8,5 @@ import java.util.List;
 
 interface ProductApiListener {
     void onProductsLoaded(List<Product> products);
+    void onFailure(String error);
 }

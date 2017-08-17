@@ -24,53 +24,24 @@ import static com.example.test3.BuildConfig.key;
 
 public class ProductApi extends BaseApi {
 
-    public void loadProducts(int categoryId, final ProductApiListener productApiListener) throws JSONException {
-
-        final BaseApiListener baseApiListener = this;
+    public void loadProducts(int categoryId, final ProductApiListener productApiListener) {
         RequestParams params = new RequestParams();
-        params.put("appKey", key);
-        params.put("categoryId",categoryId);
+        params.put("categoryId", categoryId);
+        // TODO: 17.08.2017 add offset to params
 
-        get(RELATIVE_PRODUCT_URL, params, new JsonHttpResponseHandler() {
+        get(RELATIVE_PRODUCT_URL, params, new BaseApiListener() {
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    JsonHelper jsonHelper = new JsonHelper();
-                    JsonArray array = baseApiListener.onParseProductResponse(response);
-                    List<Product> products = jsonHelper.parseArrayFromJson(Product.class,array);
-                    productApiListener.onProductsLoaded(products);
-                } catch (Exception e) {
-                    System.out.println(e);
-                }
+            public void onSuccess(Object data) {
+                JSONArray object = (JSONArray) data;
+                List<Product> products = JsonHelper.parseArrayFromJson(Product.class, object);
+                productApiListener.onProductsLoaded(products);
             }
 
             @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray timeline) {
-                // Pull out the first event on the public timeline
-                try {
-                    JSONObject firstEvent = timeline.getJSONObject(0);
-                    String tweetText = firstEvent.getString("success");
-                    //tview.setText((tweetText));
-                } catch (JSONException e) {
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-                System.out.println(errorResponse);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                System.out.println(errorResponse);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                System.out.println(responseString);
+            public void onFailure(String error) {
+                productApiListener.onFailure(error);
             }
         });
-    }
 
+    }
 }

@@ -6,11 +6,10 @@ package com.example.test3;
 
 public class CurrencyHelper {
 
-    public String formatPrice (String title, Number price) {
-        if (price==null) {
+    public String formatPrice(String title, Number price) {
+        if (price == null) {
             return title;
-        }
-        else {
+        } else {
             return (title + " Цена: " + price + " руб.");
         }
     }

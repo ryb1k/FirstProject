@@ -10,7 +10,7 @@ import android.widget.Button;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements CategoryApiListener, OnCategorySelectedListener {
+public class MainActivity extends AppCompatActivity implements  OnCategorySelectedListener {
 
     private RecyclerView recyclerView;
     private CategoryListAdapter categoryListAdapter;
@@ -19,22 +19,23 @@ public class MainActivity extends AppCompatActivity implements CategoryApiListen
     ProductApi productApi;
 
     @Override
-    public void onCategoryLoaded(List<Category> categoryList) {
-        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
-        categoryListAdapter = new CategoryListAdapter(MainActivity.this, categoryList);
-        recyclerView.setAdapter(categoryListAdapter);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        try {
-            categoryApi = new CategoryApi();
-            categoryApi.loadCategories(this);
-        } catch (Exception e) {
-            System.out.println(e);
+        categoryApi = new CategoryApi();
+        categoryApi.loadCategories(new CategoryApiListener() {
+        @Override
+        public void onCategoryLoaded(List<Category> categoryList) {
+            recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 1));
+            categoryListAdapter = new CategoryListAdapter(MainActivity.this, categoryList);
+            recyclerView.setAdapter(categoryListAdapter);
         }
+
+        @Override
+        public void onFailure(String error) {
+            System.out.println(error);
+        }
+        });
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         Button button = (Button) findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {

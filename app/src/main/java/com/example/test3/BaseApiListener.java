@@ -9,6 +9,6 @@ import org.json.JSONObject;
  */
 
 public interface BaseApiListener {
-    JsonArray onParseCategoryResponse(JSONObject response);
-    JsonArray onParseProductResponse(JSONObject response);
+    void onSuccess(Object data);
+    void onFailure(String error);
 }

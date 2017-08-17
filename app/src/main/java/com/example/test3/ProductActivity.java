@@ -11,9 +11,8 @@ import java.util.List;
  * Created by Денис on 08.08.2017.
  */
 
-public class ProductActivity extends AppCompatActivity implements ProductApiListener {
+public class ProductActivity extends AppCompatActivity {
 
-    // TODO: 11.08.2017 распределить классы по Model, View, Activity
     private RecyclerView recyclerView;
     private ProductListAdapter productListAdapter;
     private String title;
@@ -21,28 +20,37 @@ public class ProductActivity extends AppCompatActivity implements ProductApiList
     ProductApi productApi;
 
     @Override
-    public void onProductsLoaded(List<Product> products) {
-        recyclerView.setLayoutManager(new GridLayoutManager(ProductActivity.this,1));
-        productListAdapter = new ProductListAdapter(ProductActivity.this, products);
-        recyclerView.setAdapter(productListAdapter);
-
-        setTitle(title);
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.product_activity);
         int categoryId = getIntent().getIntExtra("categoryId", 0);
         title = getIntent().getStringExtra("categoryTitle");
-        try {
-            productApi = new ProductApi();
-            productApi.loadProducts(categoryId, this);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        productApi = new ProductApi();
+        productApi.loadProducts(categoryId, new ProductApiListener() {
+            @Override
+            public void onProductsLoaded(List<Product> products) {
+                recyclerView.setLayoutManager(new GridLayoutManager(ProductActivity.this, 1));
+                productListAdapter = new ProductListAdapter(ProductActivity.this, products); // TODO: 17.08.2017 pass this.products
+                recyclerView.setAdapter(productListAdapter);
+
+                setTitle(title);
+            }
+
+            @Override
+            public void onFailure(String error) {
+
+            }
+        });
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
     }
+
+    // TODO: 17.08.2017 add method loadNextProductPart
+
+    // TODO: 17.08.2017 subscribe to recyclerview scroll via ScrollViewListener and call loadNextProductPart
+
+    // TODO: 17.08.2017 control multiple loadNextProductPart calling isLoading
+
+    // TODO: 17.08.2017 use isLoaded
 
 
 }

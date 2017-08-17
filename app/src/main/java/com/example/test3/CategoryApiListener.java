@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface CategoryApiListener {
     void onCategoryLoaded(List<Category> categoryList);
+    void onFailure(String error);
 }
