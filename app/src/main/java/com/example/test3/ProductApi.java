@@ -24,11 +24,10 @@ import static com.example.test3.BuildConfig.key;
 
 public class ProductApi extends BaseApi {
 
-    public void loadProducts(int categoryId, final ProductApiListener productApiListener) {
+    public void loadProducts(int categoryId, int offset, final ProductApiListener productApiListener) {
         RequestParams params = new RequestParams();
         params.put("categoryId", categoryId);
-        // TODO: 17.08.2017 add offset to params
-
+        params.put("offset", offset);
         get(RELATIVE_PRODUCT_URL, params, new BaseApiListener() {
             @Override
             public void onSuccess(Object data) {

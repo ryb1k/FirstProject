@@ -38,7 +38,6 @@ public class BaseApi {
                 try {
                     Object data = response.get("data");
                     JSONObject meta = response.getJSONObject("meta");
-                    // TODO: 17.08.2017 check success. Call responseHandler.onFailure with error
                     responseHandler.onSuccess(data);
                 } catch (Exception e) {
                     System.out.println(e);
