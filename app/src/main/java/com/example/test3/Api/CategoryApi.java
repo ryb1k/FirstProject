@@ -1,19 +1,17 @@
-package com.example.test3;
+package com.example.test3.Api;
 
-import com.google.gson.JsonArray;
-import com.loopj.android.http.JsonHttpResponseHandler;
+import com.example.test3.Listeners.BaseApiListener;
+import com.example.test3.BaseClasses.Category;
+import com.example.test3.Listeners.CategoryApiListener;
+import com.example.test3.JsonHelper;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
 
-import cz.msebera.android.httpclient.Header;
-
 import static com.example.test3.BuildConfig.RELATIVE_CATEGORY_URL;
-import static com.example.test3.BuildConfig.key;
 
 
 /**

@@ -1,4 +1,4 @@
-package com.example.test3;
+package com.example.test3.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,10 +9,17 @@ import android.view.View;
 import android.widget.Button;
 
 
+import com.example.test3.Adapters.CategoryListAdapter;
+import com.example.test3.Api.CategoryApi;
+import com.example.test3.Api.ProductApi;
+import com.example.test3.BaseClasses.Category;
+import com.example.test3.Listeners.CategoryApiListener;
+import com.example.test3.Listeners.OnCategorySelectedListener;
+import com.example.test3.R;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements  OnCategorySelectedListener {
+public class MainActivity extends AppCompatActivity implements OnCategorySelectedListener {
 
     private RecyclerView recyclerView;
     private CategoryListAdapter categoryListAdapter;

@@ -1,4 +1,4 @@
-package com.example.test3;
+package com.example.test3.Adapters;
 
         import android.support.v7.widget.RecyclerView;
         import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ package com.example.test3;
         import android.widget.TextView;
 
         import com.bumptech.glide.Glide;
+        import com.example.test3.BaseClasses.Category;
+        import com.example.test3.Activities.MainActivity;
+        import com.example.test3.R;
 
         import java.util.List;
 

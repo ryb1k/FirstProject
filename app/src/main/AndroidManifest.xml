@@ -10,14 +10,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <categories android:name="android.intent.categories.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ProductActivity">
+        <activity android:name=".Activities.ProductActivity">
         </activity>
     </application>
 

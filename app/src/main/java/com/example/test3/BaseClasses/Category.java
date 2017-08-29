@@ -1,4 +1,4 @@
-package com.example.test3;
+package com.example.test3.BaseClasses;
 
 /**
  * Created by Денис on 25.07.2017.
